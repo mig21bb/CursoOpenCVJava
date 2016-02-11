@@ -1,10 +1,6 @@
 
 package week1_01;
 
-/**
- *
- * @author Administrador
- */
 import java.io.ByteArrayInputStream;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -23,6 +19,7 @@ public class week1_01 extends Application {
     public void start(Stage primaryStage) {
         
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        
         String NombreImagen = "ivvi.jpg";
         Mat m = Imgcodecs.imread(NombreImagen);
         if (m.empty()) {
