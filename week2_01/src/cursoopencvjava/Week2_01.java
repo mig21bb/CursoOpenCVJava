@@ -49,6 +49,8 @@ public class Week2_01 extends Application{
         src = Imgcodecs.imread(NombreImagen);
         if (src.empty()) {
             System.out.println("Error al cargar la imagen: " + NombreImagen);
+        } else {
+            System.out.println("Imagen cargada");
         }
         
         /// Separar la imagen a 3 subimagenes ( A, V y R )
@@ -75,42 +77,48 @@ public class Week2_01 extends Application{
        
         
         Imgproc.calcHist((List<Mat>) bgr_planes, new MatOfInt(0), new Mat(), b_hist, histSize, range, accumulate);
-	Imgproc.calcHist((List<Mat>) bgr_planes, new MatOfInt(0), new Mat(), g_hist, histSize, range, accumulate);
-        Imgproc.calcHist((List<Mat>) bgr_planes, new MatOfInt(0), new Mat(), r_hist, histSize, range, accumulate);
+	Imgproc.calcHist((List<Mat>) bgr_planes, new MatOfInt(1), new Mat(), g_hist, histSize, range, accumulate);
+        Imgproc.calcHist((List<Mat>) bgr_planes, new MatOfInt(2), new Mat(), r_hist, histSize, range, accumulate);
         System.out.println("Azul" + b_hist.toString()+b_hist.dump());
         System.out.println("rojo" + r_hist.toString()+r_hist.dump());
         System.out.println("Verde" + g_hist.toString()+g_hist.dump());
         
                 
-        int hist_w = 500; int hist_h = 500;
-        int bin_w = Core.cvRound((double)(hist_w / histSize));
-	Mat histImage = Mat.zeros( 100, (int)histSize.get(0, 0)[0], CvType.CV_8UC1);
+        int hist_w = 512; int hist_h = 400;
+        long bin_w;
+        bin_w = Math.round((double)(hist_w /256));
+	Mat histImage = new Mat(hist_h, hist_w, CvType.CV_8UC3,new Scalar(0,0,0));
         Core.normalize(b_hist,b_hist, 1, histImage.rows() , Core.NORM_MINMAX, -1, new Mat() ); 
         Core.normalize(g_hist,g_hist, 1, histImage.rows() , Core.NORM_MINMAX, -1, new Mat() ); 
         Core.normalize(r_hist,r_hist, 1, histImage.rows() , Core.NORM_MINMAX, -1, new Mat() ); 
         
-        for( int i = 0; i < (int)histSize.get(0, 0)[0]; i++ )
-{                   
+        for( int i = 0; i < 255; i++ ){
         line(
                 histImage,
-                new Point( i, histImage.rows() ),
-                new Point( i, histImage.rows()-Math.round( b_hist.get(i,0)[0] )) ,
+                new Point( bin_w*(i-1), hist_h - Math.round(b_hist.get(i-1,0)[0])),
+                new Point( bin_w*(i), hist_h - Math.round(b_hist.get(i,0)[0])),
                 new Scalar( 255, 0, 0),
                 2, 8, 0 );
         line(
                 histImage,
-                new Point( i, histImage.rows() ),
-                new Point( i, histImage.rows()-Math.round( r_hist.get(i,0)[0] )) ,
+                new Point( bin_w*(i-1), hist_h - Math.round(g_hist.get(i-1,0)[0])),
+                new Point( bin_w*(i), hist_h - Math.round(g_hist.get(i,0)[0])),
                 new Scalar( 0, 255, 0),
                 2, 8, 0 );
         line(
                 histImage,
-                new Point( i, histImage.rows() ),
-                new Point( i, histImage.rows()-Math.round( g_hist.get(i,0)[0] )) ,
+                new Point( bin_w*(i-1), hist_h - Math.round(r_hist.get(i-1,0)[0])),
+                new Point( bin_w*(i), hist_h - Math.round(r_hist.get(i,0)[0])),
                 new Scalar( 0, 0, 255),
                 2, 8, 0 );
-}
-        MatOfByte buffer = new MatOfByte();
+                }
+                
+            
+            NewStage s = new NewStage();
+            s.newWindow(src);
+            s.newWindow(histImage);
+            
+//        MatOfByte buffer = new MatOfByte();
         
         
        
@@ -126,43 +134,70 @@ public class Week2_01 extends Application{
 //                        
 //            i += 1;
 //        }
+            
         
-        Imgcodecs.imencode(".png", src, buffer);
-        System.out.println("Cargada con imencode");
-        Image src_im = new Image(new ByteArrayInputStream(buffer.toArray()));
-        Imgcodecs.imencode(".png", histImage, buffer);
-        System.out.println("Cargada con imencode");
-        Image histogram = new Image(new ByteArrayInputStream(buffer.toArray()));
-        System.out.println(histogram.toString());
 //         Create Image and ImageView objects
-        
-        
-        
-      
-        // Display image on screen
-        Imgcodecs.imencode(".png", b_hist, buffer);
+            
+            
+            
+            
+            
+            
+
+//        Imgcodecs.imencode(".png", src, buffer);
+//        System.out.println("Cargada con imencode");
+//        Image src_im = new Image(new ByteArrayInputStream(buffer.toArray()));
+//        Imgcodecs.imencode(".png", histImage, buffer);
+//        System.out.println("Cargada con imencode");
+//        Image histogram = new Image(new ByteArrayInputStream(buffer.toArray()));
+//        System.out.println(histogram.toString());
+//         Create Image and ImageView objects
+//        
+//        
+//        
+//      
+//         Display image on screen
+//        Imgcodecs.imencode(".png", g_hist, buffer);
 //        Image image = new Image(new ByteArrayInputStream(buffer.toArray()));
-        ImageView imageView0 = new ImageView();
-        ImageView imageView1 = new ImageView();
+//        ImageView imageView0 = new ImageView();
+//        ImageView imageView1 = new ImageView();
 //        ImageView imageView2 = new ImageView();
-        imageView0.setImage(src_im);
-        imageView1.setImage(histogram);
+//        imageView0.setImage(src_im);
+//        imageView1.setImage(histogram);
 //        imageView2.setImage(images.get(2));
-      
-        // Display image on screen
+//      
+//         Display image on screen
 //        StackPane im = new StackPane();
-        StackPane his = new StackPane();
-//        im.getChildren().add(imageView0);
-        his.getChildren().add(imageView1);
+//        StackPane his = new StackPane();
+//        his.getChildren().add(imageView0);
+//        his.getChildren().add(imageView1);
 //        root.getChildren().add(imageView1);
 //        root.getChildren().add(imageView2);
 //        Scene scene0 = new Scene(im);
-        Scene scene1 = new Scene(his);
-        primaryStage.setTitle("Image Read Test");
+//        Scene scene1 = new Scene(his);
+//        primaryStage.setTitle("Image Read Test");
 //        primaryStage.setScene(scene0);
-        primaryStage.setScene(scene1);
-        primaryStage.show();
+//        primaryStage.setScene(scene1);
+//        primaryStage.show();
+
     }
+//    public void newWindow(Mat m){
+//        Stage s = new Stage();
+//        MatOfByte buffer = new MatOfByte();
+//        Imgcodecs.imencode(".png", m, buffer);
+//        System.out.println(m.toString() + "Cargada con imencode en metodo");
+//        Image img = new Image(new ByteArrayInputStream(buffer.toArray()));
+//        StackPane pane = new StackPane();
+////        Text t = new Text(m.dump());
+//        ImageView imageView = new ImageView();
+//        imageView.setImage(img);
+//        pane.getChildren().addAll(imageView);
+//        Scene scene = new Scene(pane);
+//        s.setScene(scene);
+//        s.setTitle(m.toString());
+//        s.show();
+//        
+//    }
  
     public static void main(String[] args) {
         launch(args);
