@@ -18,7 +18,7 @@ public class NewStage extends Stage{
         
     }    
     
-    public Stage newWindow(Mat m){
+    public Stage newWindow(Mat m, String windowName){
         Stage s = new Stage();
         MatOfByte buffer = new MatOfByte();
         Imgcodecs.imencode(".png", m, buffer);
@@ -29,7 +29,7 @@ public class NewStage extends Stage{
         pane.getChildren().add(imageView);
         Scene scene = new Scene(pane);
         s.setScene(scene);
-        s.setTitle(m.toString());
+        s.setTitle(windowName);
         s.show();
         return s;
     }

@@ -8,6 +8,7 @@ import org.opencv.core.Mat;
 
 import org.opencv.imgcodecs.Imgcodecs;
 import static org.opencv.imgproc.Imgproc.COLOR_BGR2HSV;
+import static org.opencv.imgproc.Imgproc.COLOR_BGR2Lab;
 import static org.opencv.imgproc.Imgproc.cvtColor;
 
 public class Week2_03_CS extends Application {
@@ -17,9 +18,10 @@ public class Week2_03_CS extends Application {
     public void start(Stage primaryStage) throws Exception {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         //Nombre del fichero / File name
-        String NombreImagen = "ivvi_684x684.jpg";
+        String NombreImagen = "coche-semana2.jpg";
         Mat imRGB = new Mat();
         Mat imHSV = new Mat();
+        Mat imLab = new Mat();
         //Cargamos la imagen y se comprueba que lo ha hecho correctamente
         //Get the image and check       
         imRGB = Imgcodecs.imread(NombreImagen);
@@ -34,14 +36,34 @@ public class Week2_03_CS extends Application {
 	Core.split(imRGB, bgr_planes);
         
         cvtColor(imRGB, imHSV, COLOR_BGR2HSV);
+        cvtColor(imRGB,imLab,COLOR_BGR2Lab);
         
 	List<Mat> hsv_planes = new ArrayList<>();;
 	Core.split(imHSV, hsv_planes);
         
+        List<Mat> lab_planes = new ArrayList<>();;
+	Core.split(imLab, lab_planes);
         
         NewStage s = new NewStage();
-        s.newWindow(imRGB);
-        s.newWindow(imHSV);
+        s.newWindow(imRGB,"RGB");
+        s.newWindow(imHSV,"HSV");
+        s.newWindow(imLab,"Lab");
+//        // Mostrar canales RGB        
+//        for (Mat c:bgr_planes){
+//            s.newWindow(c,c.toString()+);
+//        }
+//        // Mostrar canales HSV        
+//        for (Mat c:hsv_planes){
+//            s.newWindow(c,c.toString());
+//        }
+//        Mostrar canales HSV        
+//        for (Mat c : lab_planes) {
+//            s.newWindow(c, c.toString());
+//        }
+           s.newWindow(lab_planes.get(0),"L");
+           s.newWindow(lab_planes.get(1),"a");
+           s.newWindow(lab_planes.get(2),"b");
+        
     }
     
     public static void main(String[] args) {
