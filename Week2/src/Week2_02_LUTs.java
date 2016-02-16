@@ -40,8 +40,8 @@ public class Week2_02_LUTs extends Application {
         System.out.println(lut.dump());
 	LUT(src, lut, result);
         NewStage s = new NewStage();
-        s.newWindow(src);
-        s.newWindow(result);
+        s.newWindow(src, "Original");
+        s.newWindow(result,"Result");
     }
 
     public static void main(String[] args) {

@@ -3,9 +3,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.opencv.core.Core;
 import static org.opencv.core.CvType.CV_8UC1;
-
 import org.opencv.core.Mat;
-
 
 
 public class Week2_04_logicOp extends Application {

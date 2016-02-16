@@ -1,5 +1,3 @@
-
-
 import java.io.ByteArrayInputStream;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -14,10 +12,7 @@ public class NewStage extends Stage{
     
     Mat m = new Mat();
 
-    public NewStage() {
-        
-    }    
-    
+          
     public Stage newWindow(Mat m, String windowName){
         Stage s = new Stage();
         MatOfByte buffer = new MatOfByte();
