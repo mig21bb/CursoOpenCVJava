@@ -1,8 +1,6 @@
-
-package week1_01;
-
 import java.io.ByteArrayInputStream;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -13,7 +11,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.imgcodecs.Imgcodecs;
  
-public class week1_01 extends Application {
+public class Week1 extends Application {
     
     @Override
     public void start(Stage primaryStage) {
