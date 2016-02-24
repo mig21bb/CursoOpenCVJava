@@ -21,10 +21,7 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import static org.opencv.imgproc.Imgproc.line;
 
-/**
- *
- * @author Administrador
- */
+
 public class Week2_01_hist extends Application{
 
     @Override
